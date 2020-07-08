@@ -20,4 +20,12 @@ jobs:
         chmod 600 private_key
         echo $SSH_KNOWN_HOST > known_hosts
         chmod 600 known_hosts
-        ls -la
+    
+    - name: push source
+      env:
+        SSH_USER: ${{ secrets.SSH_USER }}
+        SSH_URL: ${{ secrets.SSH_URL }}
+      run: |
+        git remote add prod $SSH_USER@$SSH_URL:~/toot-counter
+        $GIT_SSH_COMMAND="ssh -i private_key -o UserKnownHostsFile=known_hosts" git push prod master
+        
