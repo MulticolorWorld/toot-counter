@@ -13,5 +13,5 @@ jobs:
 
     - name: test
       env: 
-        - TOOT_COUNTER_DB_JDBC_URL: ${{ secrets.TOOT_COUNTER_DB_JDBC_URL }}
+        TOOT_COUNTER_DB_JDBC_URL: ${{ secrets.TOOT_COUNTER_DB_JDBC_URL }}
       run: echo $TOOT_COUNTER_DB_JDBC_URL
