@@ -21,12 +21,10 @@ jobs:
         echo "$SSH_KNOWN_HOST" > known_hosts
         chmod 600 known_hosts
     
-    - name: push source
+    - name: sync source
       env:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_URL: ${{ secrets.SSH_URL }}
-        GIT_SSH_COMMAND: ssh -i private_key -o UserKnownHostsFile=known_hosts
       run: |
-        git remote add prod "$SSH_USER"@"$SSH_URL":~/toot-counter
-        git push -f prod master
+        rsync -e "ssh -i private_key -o UserKnownHostsFile=known_hosts" -vr --delete --exclude=.git . "$SSH_USER"@"$SSH_URL":~/toot-counter/
         
