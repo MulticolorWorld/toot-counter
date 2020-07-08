@@ -16,9 +16,9 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_KNOWN_HOST: ${{ secrets.SSH_KNOWN_HOST }}
       run: |
-        echo $SSH_PRIVATE_KEY > private_key
+        echo "$SSH_PRIVATE_KEY" > private_key
         chmod 600 private_key
-        echo $SSH_KNOWN_HOST > known_hosts
+        echo "$SSH_KNOWN_HOST" > known_hosts
         chmod 600 known_hosts
     
     - name: push source
@@ -27,6 +27,6 @@ jobs:
         SSH_URL: ${{ secrets.SSH_URL }}
         GIT_SSH_COMMAND: ssh -i private_key -o UserKnownHostsFile=known_hosts
       run: |
-        git remote add prod $SSH_USER@$SSH_URL:~/toot-counter
+        git remote add prod "$SSH_USER"@"$SSH_URL":~/toot-counter
         git push prod master
         
