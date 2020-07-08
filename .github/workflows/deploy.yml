@@ -11,7 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: test
+    - name: ssh config
       env: 
-        TOOT_COUNTER_DB_JDBC_URL: ${{ secrets.TOOT_COUNTER_DB_JDBC_URL }}
-      run: echo $TOOT_COUNTER_DB_JDBC_URL
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_KNOWN_HOST: ${{ secrets.SSH_KNOWN_HOST }}
+      run: |
+        echo $SSH_PRIVATE_KEY > private_key
+        chmod 600 private_key
+        echo $SSH_KNOWN_HOST > known_hosts
+        chmod 600 known_hosts
+        ls -la
