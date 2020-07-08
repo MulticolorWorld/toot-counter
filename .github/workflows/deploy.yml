@@ -28,5 +28,5 @@ jobs:
         GIT_SSH_COMMAND: ssh -i private_key -o UserKnownHostsFile=known_hosts
       run: |
         git remote add prod "$SSH_USER"@"$SSH_URL":~/toot-counter
-        git push prod master
+        git push -f prod master
         
