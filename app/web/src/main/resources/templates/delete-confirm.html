@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>toot-counter(仮)</title>
+</head>
+<body>
+<p>ログイン中のアカウント:<span th:text="${user.name}"></span>@<span th:text="${instance.url}"></span></p>
+<p>アカウントをtoot-counterから削除します</p>
+<p>よろしいですか？</p>
+<form action="/delete" method="post">
+    <input type="hidden" name="csrfToken" th:value="${csrfToken}"/>
+    <p/>
+    <input type="submit" value="削除する"/>
+</form>
+</body>
+</html>

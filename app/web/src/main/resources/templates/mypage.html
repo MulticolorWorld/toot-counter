@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>toot-counter</title>
+</head>
+<body>
+<p th:text="${loginMessage}"></p>
+<p><span>ログイン中のアカウント: </span><span th:text="${user.name}"></span>@<span th:text="${instance.url}"></span></p>
+<p><span>現在の通知範囲: </span><span th:text="${tootVisibilityMessage}"></span></p>
+<p><a href="/config-form">設定変更</a></p>
+<p><a href="/delete-confirm">アカウントの削除</a></p>
+</body>
+</html>

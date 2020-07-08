@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+  app-web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile-web
+    image: toot-counter-app-web:latest
+    networks: 
+      - toot_counter
+    environment:
+      toot_counter_db_jdbc_url: ${toot_counter_db_jdbc_url}
+      toot_counter_db_name: ${toot_counter_db_name}
+      toot_counter_db_user: ${toot_counter_db_user}
+      toot_counter_db_password: ${toot_counter_db_password}
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - db
+  app-task:
+    build:
+      context: ./app
+      dockerfile: Dockerfile-task
+    image: toot-counter-app-task:latest
+    networks: 
+      - toot_counter
+    environment:
+      toot_counter_db_jdbc_url: ${toot_counter_db_jdbc_url}
+      toot_counter_db_name: ${toot_counter_db_name}
+      toot_counter_db_user: ${toot_counter_db_user}
+      toot_counter_db_password: ${toot_counter_db_password}
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7.30
+    ports:
+      - "127.0.0.1:3306:3306"
+    networks:
+      - toot_counter
+    volumes:
+      - ./db/data:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: ${toot_counter_db_name}
+      MYSQL_USER: ${toot_counter_db_user}
+      MYSQL_PASSWORD: ${toot_counter_db_password}
+      TZ: "Asia/Tokyo"
+  proxy:
+    image: "caddy:2.1.1-alpine"
+    ports:
+      - "80:80"
+      - "443:443"      
+    networks: 
+      - toot_counter
+    volumes:
+      - ./proxy/Caddyfile:/etc/caddy/Caddyfile
+      - ./proxy/data:/data
+    environment:
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - app-web
+
+networks:
+  toot_counter:
