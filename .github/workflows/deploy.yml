@@ -25,7 +25,8 @@ jobs:
       env:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_URL: ${{ secrets.SSH_URL }}
+        GIT_SSH_COMMAND: ssh -i private_key -o UserKnownHostsFile=known_hosts
       run: |
         git remote add prod $SSH_USER@$SSH_URL:~/toot-counter
-        $GIT_SSH_COMMAND="ssh -i private_key -o UserKnownHostsFile=known_hosts" git push prod master
+        git push prod master
         
