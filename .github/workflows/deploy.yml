@@ -28,3 +28,8 @@ jobs:
       run: |
         rsync -e "ssh -i private_key -o UserKnownHostsFile=known_hosts" -vr --delete --exclude=.git . "$SSH_USER"@"$SSH_URL":~/toot-counter/
         
+    - name: create .env
+      env:
+        TOOT_COUNTER_ENV: ${{ secrets.TOOT_COUNTER_ENV }}
+      run: |
+        echo "$TOOT_COUNTER_ENV" > .env
