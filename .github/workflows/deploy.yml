@@ -30,7 +30,7 @@ jobs:
       env:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_URL: ${{ secrets.SSH_URL }}
-      run: rsync -e "ssh -i private_key -o UserKnownHostsFile=known_hosts" -vr --delete --exclude=.git . "$SSH_USER"@"$SSH_URL":~/toot-counter/
+      run: rsync -e "ssh -i private_key -o UserKnownHostsFile=known_hosts" -vr --delete --exclude=.git --exclude=db/data --exclude=proxy/data . "$SSH_USER"@"$SSH_URL":~/toot-counter/
 
     - name: docker build
       env:
