@@ -37,11 +37,11 @@ jobs:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_URL: ${{ secrets.SSH_URL }}
         SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
-      run: echo "$SUDO_PASSWORD" | ssh -i private_key -o UserKnownHostsFile=known_hosts -tt "$SSH_USER"@"$SSH_URL" "sudo docker-compose build"
+      run: echo "$SUDO_PASSWORD" | ssh -i private_key -o UserKnownHostsFile=known_hosts -tt "$SSH_USER"@"$SSH_URL" "cd ~/toot-counter; sudo docker-compose build"
 
     - name: docker-compose up
       env:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_URL: ${{ secrets.SSH_URL }}
         SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
-      run: echo "$SUDO_PASSWORD" | ssh -i private_key -o UserKnownHostsFile=known_hosts -tt "$SSH_USER"@"$SSH_URL" "sudo docker-compose up -d proxy"
+      run: echo "$SUDO_PASSWORD" | ssh -i private_key -o UserKnownHostsFile=known_hosts -tt "$SSH_USER"@"$SSH_URL" "cd ~/toot-counter; sudo docker-compose up -d proxy"
