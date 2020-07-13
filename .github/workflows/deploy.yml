@@ -20,16 +20,24 @@ jobs:
         chmod 600 private_key
         echo "$SSH_KNOWN_HOST" > known_hosts
         chmod 600 known_hosts
+
+    - name: create .env
+      env:
+        TOOT_COUNTER_ENV: ${{ secrets.TOOT_COUNTER_ENV }}
+      run: echo "$TOOT_COUNTER_ENV" > .env
     
     - name: sync source
       env:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_URL: ${{ secrets.SSH_URL }}
-      run: |
-        rsync -e "ssh -i private_key -o UserKnownHostsFile=known_hosts" -vr --delete --exclude=.git . "$SSH_USER"@"$SSH_URL":~/toot-counter/
-        
-    - name: create .env
+      run: rsync -e "ssh -i private_key -o UserKnownHostsFile=known_hosts" -vr --delete --exclude=.git . "$SSH_USER"@"$SSH_URL":~/toot-counter/
+
+    - name: docker build
       env:
-        TOOT_COUNTER_ENV: ${{ secrets.TOOT_COUNTER_ENV }}
-      run: |
-        echo "$TOOT_COUNTER_ENV" > .env
+        SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+      run: echo "${SUDO_PASSWORD}" | sudo docker-compose build
+
+    - name: docker-compose up
+      env:
+        SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+      run: echo "${SUDO_PASSWORD}" | sudo docker-compose up -d proxy

@@ -6,6 +6,7 @@ services:
       context: ./app
       dockerfile: Dockerfile-web
     image: toot-counter-app-web:latest
+    restart: always
     networks: 
       - toot_counter
     environment:
@@ -33,6 +34,7 @@ services:
       - db
   db:
     image: mysql:5.7.30
+    restart: always
     ports:
       - "127.0.0.1:3306:3306"
     networks:
@@ -47,6 +49,7 @@ services:
       TZ: "Asia/Tokyo"
   proxy:
     image: "caddy:2.1.1-alpine"
+    restart: always
     ports:
       - "80:80"
       - "443:443"      
