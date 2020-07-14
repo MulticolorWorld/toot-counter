@@ -17,16 +17,15 @@ jobs:
             ./gradlew :web:fatjar
 
       - save_cache:
-          path:
+          paths:
             - ~/.gradle
-          keys: toot-counter-gradle-cache-v1
+          key: toot-counter-gradle-cache-v1
       
 workflows:
   version: 2
-  ci:
-    filters:
-      branches:
-        only:
-          - master
+  workflow:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: master
