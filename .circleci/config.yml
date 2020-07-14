@@ -21,3 +21,12 @@ jobs:
             - ~/.gradle
           keys: toot-counter-gradle-cache-v1
       
+workflows:
+  version: 2
+    ci:
+      filters:
+        branches:
+          only:
+            - master
+      jobs:
+        - build
