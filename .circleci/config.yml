@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  build-gradle:
     docker:
       - image: circleci/openjdk:11
     steps:
@@ -26,12 +26,29 @@ jobs:
           paths:
             - ~/.gradle
           key: gradle-cache-v1-{{ checksum "app/build.gradle.kts" }}
+  build-docker:
+    docker:
+      - image: circleci/buildpack-deps:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - attach_workspace:
+          at: app
+      - run:
+          name: test
+          command: |
+            ls -la
+            ls -la app/web/build/libs/web-1.0-all.jar
+            ls -la app/task/build/libs/task-1.0-all.jar
       
 workflows:
   version: 2
   workflow:
     jobs:
-      - build:
+      - build-gradle:
           filters:
             branches:
               only: master
+      - build-docker:
+          requires:
+            - build-gradle
