@@ -40,7 +40,7 @@ services:
     networks:
       - toot_counter
     volumes:
-      - ./db/data:/var/lib/mysql
+      - .db-data:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_DATABASE: ${toot_counter_db_name}
@@ -57,7 +57,7 @@ services:
       - toot_counter
     volumes:
       - ./proxy/Caddyfile:/etc/caddy/Caddyfile
-      - ./proxy/data:/data
+      - .proxy-data:/data
     environment:
       TZ: "Asia/Tokyo"
     depends_on:

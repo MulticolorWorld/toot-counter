@@ -16,6 +16,11 @@ jobs:
             cd app
             ./gradlew :task:fatjar
             ./gradlew :web:fatjar
+      - persist_to_workspace:
+          root: app
+          paths:
+            - web/build/libs/web-1.0-all.jar
+            - task/build/libs/task-1.0-all.jar
 
       - save_cache:
           paths:
