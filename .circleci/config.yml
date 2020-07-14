@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: adoptopenjdk/openjdk11:jdk-11.0.7_10-alpine
+      - image: ciecleci/openjdk:11
     steps:
       - checkout
       - restore_cache:
