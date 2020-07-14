@@ -23,10 +23,10 @@ jobs:
       
 workflows:
   version: 2
-    ci:
-      filters:
-        branches:
-          only:
-            - master
-      jobs:
-        - build
+  ci:
+    filters:
+      branches:
+        only:
+          - master
+    jobs:
+      - build
