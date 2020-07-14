@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@3.4.2
-
 jobs:
   build:
     docker:
@@ -38,6 +35,3 @@ workflows:
           filters:
             branches:
               only: master
-      - slack/status:
-          requires:
-            - build
