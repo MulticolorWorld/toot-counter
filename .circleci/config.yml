@@ -8,7 +8,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - toot-counter-gradle-cache-v1
+            - gradle-cache-v1-{{ checksum "app/build.gradle.kts" }}
+            - gradle-cache-v1-
       - run:
           name: build
           command: |
@@ -19,7 +20,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: toot-counter-gradle-cache-v1
+          key: gradle-cache-v1-{{ checksum "app/build.gradle.kts" }}
       
 workflows:
   version: 2
