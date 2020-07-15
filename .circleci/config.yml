@@ -51,7 +51,14 @@ jobs:
       - run: 
           name: docker up
           command: echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "cd ~/toot-counter; sudo docker-compose up -d proxy"
-            
+      - run:
+          name: enable task timer
+          command: |
+            echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo cp .circleci/toot-counter-app-task.* /etc/systemd/system/"
+            echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl daemon-reload"
+            echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl enable toot-counter-app-task.timer"
+            echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl start toot-counter-app-task-timer"
+
             
     
 workflows:

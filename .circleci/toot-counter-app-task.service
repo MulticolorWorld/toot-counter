@@ -1,0 +1,7 @@
+[Unit]
+Description=toot-counter task service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/toot-counter/toot-counter/
+ExecStart=/usr/local/bin/docker-compose up -d app-task
