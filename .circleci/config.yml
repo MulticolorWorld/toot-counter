@@ -30,16 +30,20 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:buster
     steps:
-      - setup_remote_docker
       - checkout
       - attach_workspace:
           at: app
+      - add_ssh_keys:
+          fingerprints:
+            - "76:4d:4b:8c:c5:61:ad:c5:d3:9e:b5:e5:67:2c:e6:97"
+      - run:
+          name: prepare ssh
+          command: ssh-keyscan -H $DEPLOY_HOST_NAME >> ~/.ssh/known_hosts
       - run:
           name: test
-          command: |
-            ls -la
-            ls -la app/web/build/libs/web-1.0-all.jar
-            ls -la app/task/build/libs/task-1.0-all.jar
+          command: ssh $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME whoami
+            
+            
       
 workflows:
   version: 2
