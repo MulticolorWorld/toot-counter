@@ -31,6 +31,9 @@ jobs:
       - image: circleci/buildpack-deps:buster
     steps:
       - checkout
+      - run:
+          name: install rsync
+          command: apt update && apt install -y rsync
       - attach_workspace:
           at: app
       - add_ssh_keys:
@@ -44,10 +47,10 @@ jobs:
           command: rsync -vr --delete --exclude=.env --exclude=.git --exclude=.data . $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME:~/toot-counter/
       - run:
           name: docker build
-          command: echo "$SUDO_PASSWORD" | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "cd ~/toot-counter; sudo docker-compose build"
+          command: echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "cd ~/toot-counter; sudo docker-compose build"
       - run: 
           name: docker up
-          command: echo "$SUDO_PASSWORD" | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "cd ~/toot-counter; sudo docker-compose up -d proxy"
+          command: echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "cd ~/toot-counter; sudo docker-compose up -d proxy"
             
             
     
