@@ -57,7 +57,7 @@ jobs:
             echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo cp ~/toot-counter/.circleci/toot-counter-app-task.* /etc/systemd/system/"
             echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl daemon-reload"
             echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl enable toot-counter-app-task.timer"
-            echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl start toot-counter-app-task-timer"
+            echo $SUDO_PASSWORD | ssh -tt $DEPLOY_USER_NAME@$DEPLOY_HOST_NAME "sudo systemctl start toot-counter-app-task.timer"
 
             
     
