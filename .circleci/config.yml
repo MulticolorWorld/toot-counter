@@ -33,7 +33,7 @@ jobs:
       - checkout
       - run:
           name: install rsync
-          command: apt update && apt install -y rsync
+          command: sudo apt update && sudo apt install -y rsync
       - attach_workspace:
           at: app
       - add_ssh_keys:
