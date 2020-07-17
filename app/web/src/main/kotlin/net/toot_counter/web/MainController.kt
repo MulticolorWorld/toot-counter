@@ -29,7 +29,7 @@ fun Route.mainController(mainService: MainService, messageService: MessageServic
         try {
             val (redirectUrl, instance) = mainService.preLogin(instanceName, callBackUrl)
             call.sessions.set(SessionEntity(instance, User()))
-            call.respondRedirect(redirectUrl.replace("scope=", "scopes="))
+            call.respondRedirect(redirectUrl)
         } catch (e: Exception) {
             call.respondRedirect("/error/instance-name-is-invalid")
             return@post

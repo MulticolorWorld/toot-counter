@@ -6,7 +6,6 @@ import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.method.Accounts
 import com.sys1yagi.mastodon4j.api.method.Statuses
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -34,20 +33,25 @@ suspend fun main() {
 
     val executor = Executors.newFixedThreadPool(5)
     val scope = CoroutineScope(executor.asCoroutineDispatcher())
-    val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        logger.error(exception.message)
-    }
 
     val httpClient = OkHttpClient.Builder().build()
 
     val users = userRepository.findAll().shuffled()
     val instances = instanceRepository.findAll().map { it.id to it }.toMap()
 
+    val successUserList = mutableListOf<User>()
     users.map { user ->
-        withContext(scope.coroutineContext + exceptionHandler) {
-            userTask(httpClient, user, instances.getValue(user.instanceId))
+        withContext(scope.coroutineContext) {
+            try {
+                userTask(httpClient, user, instances.getValue(user.instanceId)).let {
+                    successUserList.add(it)
+                }
+            } catch (e: Exception) {
+                logger.error(e.message)
+            }
         }
-    }.forEach { user ->
+    }
+    successUserList.forEach { user ->
         userRepository.update(user)
     }
 
