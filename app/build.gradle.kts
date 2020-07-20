@@ -95,7 +95,6 @@ project(":task") {
 
     dependencies {
         implementation(project(":db"))
-        implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.3.7")
         implementation("com.github.multicolorworld.mastodon4j", "mastodon4j", "master-SNAPSHOT")
     }
 }
