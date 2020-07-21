@@ -54,7 +54,7 @@ fun Application.module() {
 fun ApplicationCall.createCallbackUrl(path: String): String {
     val defaultPort = if (request.origin.scheme == "http") 80 else 443
     val hostPort = request.host() + request.port().let { port -> if (port == defaultPort) "" else ":$port" }
-    val protocol = request.origin.scheme
+    val protocol = "http"
     return "$protocol://$hostPort$path"
 }
 
