@@ -108,7 +108,11 @@ class MainService(
                 "http://toot-counter.net/login/callback",
                 "http://test.toot-counter.net/login/callback",
                 "http://localhost:8080/login/callback",
-                "http://localhost/login/callback"
+                "http://localhost/login/callback",
+                "https://toot-counter.net/login/callback",
+                "https://test.toot-counter.net/login/callback",
+                "https://localhost:8080/login/callback",
+                "https://localhost/login/callback"
         ).joinToString(separator = " ")
     }
 }
