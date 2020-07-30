@@ -19,6 +19,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import kotlin.system.exitProcess
@@ -40,7 +41,7 @@ fun main() {
     val users = userRepository.findAll().shuffled()
     val instances = instanceRepository.findAll().map { it.id to it }.toMap()
 
-    val successUserList = mutableListOf<User>()
+    val successUserList = Collections.synchronizedList(mutableListOf<User>())
     val futures = users.map { user ->
         CompletableFuture.runAsync(Runnable {
             try {
