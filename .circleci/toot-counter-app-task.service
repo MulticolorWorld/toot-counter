@@ -4,4 +4,5 @@ Description=toot-counter task service
 [Service]
 Type=oneshot
 WorkingDirectory=/home/toot-counter/toot-counter/
+ExecStartPre=/usr/local/bin/docker-compose stop app-task
 ExecStart=/usr/local/bin/docker-compose up -d app-task
